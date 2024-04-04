@@ -1,12 +1,18 @@
 package fr.minesales.autonomouscar.actors;
 
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Input.Buttons
 import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.math.Quaternion
+import com.badlogic.gdx.math.Vector3
 import fr.minesales.autonomouscar.Screen
+import fr.minesales.autonomouscar.engine.Time
 import fr.minesales.autonomouscar.engine.base.BaseActor
 import imgui.ImGui
 
 class CameraControllerActor(name: String, val camera: Camera) : BaseActor(name, null) {
+
+    private var cameraSpeed = 10f
 
     override fun start() {
         camera.position.set(0f, 1f, 10f)
@@ -14,6 +20,10 @@ class CameraControllerActor(name: String, val camera: Camera) : BaseActor(name, 
     }
 
     override fun update() {
+        if (Gdx.input.isButtonPressed(Buttons.RIGHT)) {
+            camera.rotate(Vector3.Y, Gdx.input.deltaX * cameraSpeed * Time.unscaledDeltaTime)
+            camera.rotate(Vector3.X, Gdx.input.deltaY * cameraSpeed * Time.unscaledDeltaTime)
+        }
         camera.update()
     }
 
