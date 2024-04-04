@@ -1,4 +1,4 @@
-package fr.minesales.autonomouscar.actors;
+package fr.minesales.autonomouscar.game.actors;
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input.Buttons
@@ -6,11 +6,11 @@ import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.math.Quaternion
 import com.badlogic.gdx.math.Vector3
 import fr.minesales.autonomouscar.Screen
-import fr.minesales.autonomouscar.engine.Time
 import fr.minesales.autonomouscar.engine.base.BaseActor
+import fr.minesales.autonomouscar.engine.utils.Time
 import imgui.ImGui
 
-class CameraControllerActor(name: String, val camera: Camera) : BaseActor(name, null) {
+class CameraControllerActor(name: String, private val camera: Camera) : BaseActor(name) {
 
     private var cameraSpeed = 10f
 
