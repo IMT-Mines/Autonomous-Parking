@@ -1,7 +1,9 @@
 package fr.minesales.autonomouscar
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.utils.viewport.ScreenViewport
+import fr.minesales.autonomouscar.engine.InputManager
 import fr.minesales.autonomouscar.engine.Renderer
 import fr.minesales.autonomouscar.engine.base.Scene
 import fr.minesales.autonomouscar.engine.utils.ImGuiRenderer
@@ -33,6 +35,7 @@ class Screen : KtxScreen {
         renderer = Renderer(currentScene)
         imGuiRenderer = ImGuiRenderer()
         imGuiRenderer.init()
+        Gdx.input.inputProcessor = InputManager.getInstance()
     }
 
     override fun render(delta: Float) {

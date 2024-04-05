@@ -3,6 +3,9 @@ package fr.minesales.autonomouscar.engine
 import com.badlogic.gdx.InputProcessor
 
 class InputManager : InputProcessor {
+
+    var cameraSpeed = 10f
+
     override fun keyDown(keycode: Int): Boolean {
         return false
     }
@@ -36,7 +39,21 @@ class InputManager : InputProcessor {
     }
 
     override fun scrolled(amountX: Float, amountY: Float): Boolean {
-        return false
+        cameraSpeed -= amountY
+        cameraSpeed = cameraSpeed.coerceAtLeast(0.1f)
+        return true
+    }
+
+    companion object {
+
+        @Volatile
+        private var instance: InputManager? = null
+
+        fun getInstance() =
+            instance ?: synchronized(this) {
+                instance ?: InputManager().also { instance = it }
+            }
+
     }
 
 }
