@@ -7,9 +7,8 @@ import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Quaternion
 import com.badlogic.gdx.math.Vector3
-import fr.minesales.autonomouscar.Screen
-import fr.minesales.autonomouscar.engine.utils.Time
 import fr.minesales.autonomouscar.engine.base.BaseActor
+import fr.minesales.autonomouscar.engine.utils.Time
 import imgui.ImGui
 
 class CameraControllerActor(name: String, val camera: Camera) : BaseActor(name, null) {
@@ -48,7 +47,7 @@ class CameraControllerActor(name: String, val camera: Camera) : BaseActor(name, 
             if (Gdx.input.isKeyPressed(Input.Keys.D)) camera.translate(right.scl(-Time.unscaledDeltaTime * 10f))
             if (Gdx.input.isKeyPressed(Input.Keys.E)) camera.translate(up.scl(Time.unscaledDeltaTime * 10f))
             if (Gdx.input.isKeyPressed(Input.Keys.Q)) camera.translate(up.scl(-Time.unscaledDeltaTime * 10f))
-        }else{
+        } else {
             Gdx.input.isCursorCatched = false
         }
 

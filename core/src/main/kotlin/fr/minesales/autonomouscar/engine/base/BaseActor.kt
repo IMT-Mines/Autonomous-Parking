@@ -4,8 +4,9 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance
 import com.badlogic.gdx.math.Quaternion
 import com.badlogic.gdx.math.Vector3
 import fr.minesales.autonomouscar.Screen
+import imgui.type.ImBoolean
 
-abstract class  BaseActor(val actor: Actor) {
+abstract class BaseActor(val actor: Actor) {
 
     constructor(name: String, model: ModelInstance? = null) : this(Actor(name, model))
 
@@ -13,7 +14,7 @@ abstract class  BaseActor(val actor: Actor) {
         Screen.currentScene.addSceneActor(this)
     }
 
-    var enabled: Boolean = true
+    var enabled: ImBoolean = ImBoolean(true)
 
     var position: Vector3
         get() = actor.model?.transform?.getTranslation(Vector3()) ?: Vector3.Zero

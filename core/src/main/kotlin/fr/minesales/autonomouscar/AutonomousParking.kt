@@ -2,9 +2,9 @@ package fr.minesales.autonomouscar
 
 import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.utils.viewport.ScreenViewport
-import fr.minesales.autonomouscar.engine.utils.ImGuiRenderer
 import fr.minesales.autonomouscar.engine.Renderer
 import fr.minesales.autonomouscar.engine.base.Scene
+import fr.minesales.autonomouscar.engine.utils.ImGuiRenderer
 import fr.minesales.autonomouscar.game.ParkingScene
 import ktx.app.KtxGame
 import ktx.app.KtxScreen

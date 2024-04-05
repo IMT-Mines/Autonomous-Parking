@@ -13,7 +13,7 @@ abstract class Scene {
 
     abstract fun getCamera(): Camera
 
-    open fun addSceneActor(actor: BaseActor) {
+    fun addSceneActor(actor: BaseActor) {
         actors.add(actor)
     }
 }
