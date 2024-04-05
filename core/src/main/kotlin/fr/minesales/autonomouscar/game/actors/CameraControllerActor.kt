@@ -56,15 +56,13 @@ class CameraControllerActor(name: String, val camera: Camera) : BaseActor(name, 
     }
 
     override fun gui() {
-        Screen.imGuiRenderer.render {
-            val q = camera.view.getRotation(Quaternion())
-            ImGui.begin("Camera Controller")
-            ImGui.text("Camera position ${camera.position.x}, ${camera.position.y}, ${camera.position.z}")
-            ImGui.text("Camera rotation ${q.pitch}, ${q.yaw}, ${q.roll}")
-            ImGui.text("Axis x $x y $y")
-            ImGui.text("Forward ${camera.direction.cpy()}")
-            ImGui.text("Right ${camera.direction.cpy().crs(Vector3(0f, 1f, 0f))}")
-            ImGui.end()
-        }
+        val q = camera.view.getRotation(Quaternion())
+        ImGui.begin("Camera Controller")
+        ImGui.text("Camera position ${camera.position.x}, ${camera.position.y}, ${camera.position.z}")
+        ImGui.text("Camera rotation ${q.pitch}, ${q.yaw}, ${q.roll}")
+        ImGui.text("Axis x $x y $y")
+        ImGui.text("Forward ${camera.direction.cpy()}")
+        ImGui.text("Right ${camera.direction.cpy().crs(Vector3(0f, 1f, 0f))}")
+        ImGui.end()
     }
 }
