@@ -31,11 +31,11 @@ class CameraControllerActor(name: String, val camera: Camera) : BaseActor(name, 
             x += -Gdx.input.deltaX * sensitivity * Time.unscaledDeltaTime
             y += Gdx.input.deltaY * sensitivity * Time.unscaledDeltaTime
 
-            y = MathUtils.clamp(y, -90f + 0.01f, 90f - 0.01f)
+            y = MathUtils.clamp(y, -90f, 90f)
 
             val forward = camera.direction.cpy().nor()
-            val up = Vector3(0f, 1f, 0f)
-            camera.rotate(up, x - prevX)
+            camera.rotate(Vector3.Y, x - prevX)
+            val up = camera.up.cpy().nor()
             val right = up.cpy().crs(camera.direction).nor()
             camera.rotate(right, y - prevY)
 

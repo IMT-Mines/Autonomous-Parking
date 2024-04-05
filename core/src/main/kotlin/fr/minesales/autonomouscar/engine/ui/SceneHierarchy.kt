@@ -7,9 +7,7 @@ class SceneHierarchy {
     fun draw(scene: Scene) {
         ImGui.begin("Hierarchy")
         scene.actors.forEach {
-            ImGui.checkbox("##", it.enabled)
-            ImGui.sameLine()
-            ImGui.text(it.actor.name)
+            ImGui.checkbox(it.actor.name, it.enabled)
         }
         ImGui.end()
     }
