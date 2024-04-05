@@ -1,4 +1,4 @@
-package fr.minesales.autonomouscar.game.actors;
+package fr.minesales.autonomouscar.actors;
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
@@ -7,13 +7,11 @@ import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Quaternion
 import com.badlogic.gdx.math.Vector3
-import fr.minesales.autonomouscar.engine.InputManager
 import fr.minesales.autonomouscar.engine.base.BaseActor
 import fr.minesales.autonomouscar.engine.utils.Time
 import imgui.ImGui
 
 class CameraControllerActor(name: String, val camera: Camera) : BaseActor(name, null) {
-
     private var sensitivity = 10f
     private var x = 0f
     private var y = 0f
@@ -44,14 +42,12 @@ class CameraControllerActor(name: String, val camera: Camera) : BaseActor(name, 
             prevX = x
             prevY = y
 
-            val movementSpeed = InputManager.getInstance().cameraSpeed
-
-            if (Gdx.input.isKeyPressed(Input.Keys.W)) camera.translate(forward.scl(Time.unscaledDeltaTime * movementSpeed))
-            if (Gdx.input.isKeyPressed(Input.Keys.S)) camera.translate(forward.scl(-Time.unscaledDeltaTime * movementSpeed))
-            if (Gdx.input.isKeyPressed(Input.Keys.A)) camera.translate(right.scl(Time.unscaledDeltaTime * movementSpeed))
-            if (Gdx.input.isKeyPressed(Input.Keys.D)) camera.translate(right.scl(-Time.unscaledDeltaTime * movementSpeed))
-            if (Gdx.input.isKeyPressed(Input.Keys.E)) camera.translate(up.scl(Time.unscaledDeltaTime * movementSpeed))
-            if (Gdx.input.isKeyPressed(Input.Keys.Q)) camera.translate(up.scl(-Time.unscaledDeltaTime * movementSpeed))
+            if (Gdx.input.isKeyPressed(Input.Keys.W)) camera.translate(forward.scl(Time.unscaledDeltaTime * 10f))
+            if (Gdx.input.isKeyPressed(Input.Keys.S)) camera.translate(forward.scl(-Time.unscaledDeltaTime * 10f))
+            if (Gdx.input.isKeyPressed(Input.Keys.A)) camera.translate(right.scl(Time.unscaledDeltaTime * 10f))
+            if (Gdx.input.isKeyPressed(Input.Keys.D)) camera.translate(right.scl(-Time.unscaledDeltaTime * 10f))
+            if (Gdx.input.isKeyPressed(Input.Keys.E)) camera.translate(up.scl(Time.unscaledDeltaTime * 10f))
+            if (Gdx.input.isKeyPressed(Input.Keys.Q)) camera.translate(up.scl(-Time.unscaledDeltaTime * 10f))
         } else {
             Gdx.input.isCursorCatched = false
         }

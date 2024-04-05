@@ -11,10 +11,10 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder
 import fr.minesales.autonomouscar.Screen
+import fr.minesales.autonomouscar.actors.CameraControllerActor
 import fr.minesales.autonomouscar.engine.base.Scene
 import fr.minesales.autonomouscar.engine.base.StaticMeshActor
 import fr.minesales.autonomouscar.engine.utils.ModelLoader
-import fr.minesales.autonomouscar.game.actors.CameraControllerActor
 import ktx.assets.toInternalFile
 
 class ParkingScene(private val screen: Screen) : Scene() {

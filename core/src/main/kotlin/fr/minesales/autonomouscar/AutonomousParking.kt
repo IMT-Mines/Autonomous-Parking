@@ -36,6 +36,7 @@ class Screen : KtxScreen {
         imGuiRenderer = ImGuiRenderer()
         imGuiRenderer.init()
         Gdx.input.inputProcessor = InputManager.getInstance()
+        Gdx.graphics.setVSync(false)
     }
 
     override fun render(delta: Float) {

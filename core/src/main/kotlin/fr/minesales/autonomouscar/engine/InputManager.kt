@@ -53,7 +53,5 @@ class InputManager : InputProcessor {
             instance ?: synchronized(this) {
                 instance ?: InputManager().also { instance = it }
             }
-
     }
-
 }
