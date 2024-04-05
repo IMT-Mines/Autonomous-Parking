@@ -19,6 +19,7 @@ class CameraControllerActor(name: String, val camera: Camera) : BaseActor(name, 
     private var prevY = 0f
 
     override fun start() {
+        camera.near = 0.03f
         camera.position.set(0f, 1f, 10f)
         camera.update()
     }
@@ -30,12 +31,12 @@ class CameraControllerActor(name: String, val camera: Camera) : BaseActor(name, 
             x += -Gdx.input.deltaX * sensitivity * Time.unscaledDeltaTime
             y += Gdx.input.deltaY * sensitivity * Time.unscaledDeltaTime
 
-            y = MathUtils.clamp(y, -90f, 90f)
+            y = MathUtils.clamp(y, -90f + 0.01f, 90f - 0.01f)
 
             val forward = camera.direction.cpy().nor()
             val up = Vector3(0f, 1f, 0f)
             camera.rotate(up, x - prevX)
-            val right = up.cpy().crs(camera.direction)
+            val right = up.cpy().crs(camera.direction).nor()
             camera.rotate(right, y - prevY)
 
             prevX = x
