@@ -11,10 +11,10 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder
 import fr.minesales.autonomouscar.Screen
-import fr.minesales.autonomouscar.game.actors.CameraControllerActor
-import fr.minesales.autonomouscar.engine.base.StaticMeshActor
+import fr.minesales.autonomouscar.actors.CameraControllerActor
 import fr.minesales.autonomouscar.engine.base.Scene
-import fr.minesales.autonomouscar.engine.utils.ObjectImporter
+import fr.minesales.autonomouscar.engine.base.StaticMeshActor
+import fr.minesales.autonomouscar.engine.utils.ObjImporter
 import ktx.assets.toInternalFile
 
 class ParkingScene(private val screen: Screen) : Scene() {
@@ -49,7 +49,7 @@ class ParkingScene(private val screen: Screen) : Scene() {
 
 //        StaticMeshActor("Cube", cube)
 //        StaticMeshActor("Plane", plane)
-        StaticMeshActor(ObjectImporter.createActorFromObjFile("models/truck/truck.obj".toInternalFile()))
+        StaticMeshActor(ObjImporter.createActorFromObjFile("models/truck/truck.obj".toInternalFile()))
 
         camera = PerspectiveCamera(60f, Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
         cameraController = CameraControllerActor("MainCamera", camera)

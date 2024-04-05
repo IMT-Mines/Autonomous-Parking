@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Quaternion
 import com.badlogic.gdx.math.Vector3
 import fr.minesales.autonomouscar.Screen
 
-abstract class BaseActor(val actor: Actor) {
+abstract class  BaseActor(val actor: Actor) {
 
     constructor(name: String, model: ModelInstance? = null) : this(Actor(name, model))
 

@@ -7,7 +7,6 @@ class Time {
         var deltaTime: Float = 0f
         var unscaledDeltaTime: Float = 0f
         var fixedDeltaTime: Float = 0f
-        var unscaledFixedDeltaTime: Float = 0f
 
         fun setTimings(delta: Float) {
             time += delta

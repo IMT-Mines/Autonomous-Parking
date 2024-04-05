@@ -1,4 +1,4 @@
-package fr.minesales.autonomouscar
+package fr.minesales.autonomouscar.engine.utils
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputProcessor

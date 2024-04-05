@@ -17,16 +17,16 @@ class Renderer(private val scene: Scene) {
 
         modelBatch.begin(scene.getCamera())
 
-        for (sceneActor in scene.actors) {
-            if (!sceneActor.enabled || sceneActor.actor.model == null) continue
-            modelBatch.render(sceneActor.actor.model, scene.environment)
+        scene.actors.forEach {
+            if (!it.enabled || it.actor.model == null) return@forEach
+            modelBatch.render(it.actor.model, scene.environment)
         }
 
         modelBatch.end()
 
-        for (actor in scene.actors) {
-            if (!actor.enabled) continue
-            actor.gui()
+        scene.actors.forEach {
+            if (!it.enabled) return@forEach
+            it.gui()
         }
     }
 
