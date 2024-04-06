@@ -1,4 +1,4 @@
-package fr.minesales.autonomouscar.actors
+package fr.minesales.autonomouscar.game.actors
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Quaternion
 import com.badlogic.gdx.math.Vector3
 import fr.minesales.autonomouscar.engine.InputManager
+import fr.minesales.autonomouscar.engine.SceneManager
 import fr.minesales.autonomouscar.engine.base.BaseActor
 import fr.minesales.autonomouscar.engine.utils.Time
 import imgui.ImGui
@@ -19,9 +20,13 @@ class CameraControllerActor(name: String, val camera: Camera) : BaseActor(name, 
     private var prevX = 0f
     private var prevY = 0f
 
+    init {
+        SceneManager.currentScene?.mainCamera = camera
+    }
+
     override fun start() {
         camera.near = 0.03f
-        camera.position.set(0f, 1f, 10f)
+        camera.position.set(0f, 0f, 5f)
         camera.update()
     }
 

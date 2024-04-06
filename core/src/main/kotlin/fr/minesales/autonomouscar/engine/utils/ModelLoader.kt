@@ -9,6 +9,11 @@ import fr.minesales.autonomouscar.engine.base.Actor
 
 class ModelLoader {
     companion object {
+        fun loadFromFile(file: FileHandle): ModelInstance {
+            val model = G3dModelLoader(UBJsonReader()).loadModel(Gdx.files.internal(file.path()))
+            return ModelInstance(model)
+        }
+
         fun createActorFromFile(file: FileHandle): Actor {
             val model = G3dModelLoader(UBJsonReader()).loadModel(Gdx.files.internal(file.path()))
             return Actor(file.nameWithoutExtension(), ModelInstance(model))

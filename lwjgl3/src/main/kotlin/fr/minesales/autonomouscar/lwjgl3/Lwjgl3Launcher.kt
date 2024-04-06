@@ -11,7 +11,7 @@ fun main() {
     if (StartupHelper.startNewJvmIfRequired())
       return
     Lwjgl3Application(AutonomousParking(), Lwjgl3ApplicationConfiguration().apply {
-        setTitle("autonomous-parking")
+        setTitle("Autonomous Parking")
         setWindowedMode(1280, 720)
         setWindowIcon(*(arrayOf(128, 64, 32, 16).map { "libgdx$it.png" }.toTypedArray()))
     })

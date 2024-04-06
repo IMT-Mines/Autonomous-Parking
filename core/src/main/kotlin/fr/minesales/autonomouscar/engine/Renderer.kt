@@ -1,47 +1,69 @@
 package fr.minesales.autonomouscar.engine
 
+import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.g3d.ModelBatch
+import com.badlogic.gdx.math.collision.BoundingBox
 import fr.minesales.autonomouscar.Screen
+import fr.minesales.autonomouscar.engine.base.Actor
 import fr.minesales.autonomouscar.engine.base.Scene
 import fr.minesales.autonomouscar.engine.ui.SceneHierarchy
 import fr.minesales.autonomouscar.engine.ui.Statistics
 import fr.minesales.autonomouscar.engine.utils.Time
 import ktx.app.clearScreen
 
-class Renderer(private val scene: Scene) {
+class Renderer {
     private val modelBatch = ModelBatch()
     private val hierarchy = SceneHierarchy()
     private val statistics = Statistics()
 
     fun render(delta: Float) {
         clearScreen(red = 0f, green = 0f, blue = 0f)
+        val scene = SceneManager.currentScene
+        val camera = scene?.mainCamera ?: return
 
         Time.setTimings(delta)
 
-        scene.actors.forEach { it.update() }
+        scene.actors.forEach {
+            if (!it.enabled.get()) return@forEach
+            it.update()
+        }
 
-        modelBatch.begin(scene.getCamera())
+        modelBatch.begin(camera)
 
         scene.actors.forEach {
-            if (!it.enabled.get() || it.actor.model == null) return@forEach
+            if (!it.enabled.get() || it.actor.model == null /*|| cull(camera, it.actor)*/) return@forEach
             modelBatch.render(it.actor.model, scene.environment)
         }
 
         modelBatch.end()
 
         Screen.imGuiRenderer.render {
-            scene.actors.forEach {
-                if (!it.enabled.get()) return@forEach
-                it.gui()
-            }
-
-            hierarchy.draw(scene)
-            statistics.draw(scene)
+            renderGui(scene)
+            renderEngineGui(scene)
         }
+
+        SceneManager.onEndOfFrame()
+    }
+
+    private fun cull(camera: Camera, actor: Actor): Boolean {
+        val aabb = BoundingBox()
+        actor.model!!.calculateBoundingBox(aabb)
+        return !camera.frustum.boundsInFrustum(aabb)
+    }
+
+    private fun renderGui(scene: Scene){
+        scene.actors.forEach {
+            if (!it.enabled.get()) return@forEach
+            it.gui()
+        }
+    }
+
+    private fun renderEngineGui(scene: Scene){
+        hierarchy.draw(scene)
+        statistics.draw(scene)
     }
 
     fun dispose() {
         modelBatch.dispose()
-        scene.dispose()
     }
 }

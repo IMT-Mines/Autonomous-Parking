@@ -2,18 +2,24 @@ package fr.minesales.autonomouscar.engine.base
 
 import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.g3d.Environment
+import fr.minesales.autonomouscar.Screen
 
-abstract class Scene {
+class Scene {
     val actors: MutableList<BaseActor> = mutableListOf()
     val environment: Environment = Environment()
 
-    abstract fun init()
+    private var camera: Camera? = null
 
-    abstract fun dispose()
+    var mainCamera: Camera?
+        get() = camera
+        set(value) {
+            camera = value
+            Screen.viewport.camera = value
+        }
 
-    abstract fun getCamera(): Camera
-
-    fun addSceneActor(actor: BaseActor) {
-        actors.add(actor)
+    fun init(block: (Scene) -> Unit): Scene {
+        block(this)
+        actors.forEach{ it.start() }
+        return this
     }
 }
