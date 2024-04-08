@@ -4,8 +4,7 @@ import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.g3d.ModelBatch
 import com.badlogic.gdx.math.collision.BoundingBox
 import fr.minesales.autonomouscar.Screen
-import fr.minesales.autonomouscar.engine.base.Actor
-import fr.minesales.autonomouscar.engine.base.Scene
+import fr.minesales.autonomouscar.engine.base.BaseActor
 import fr.minesales.autonomouscar.engine.ui.SceneHierarchy
 import fr.minesales.autonomouscar.engine.ui.Statistics
 import fr.minesales.autonomouscar.engine.utils.Time
@@ -31,8 +30,8 @@ class Renderer {
         modelBatch.begin(camera)
 
         scene.actors.forEach {
-            if (!it.enabled.get() || it.actor.model == null /*|| cull(camera, it.actor)*/) return@forEach
-            modelBatch.render(it.actor.model, scene.environment)
+            if (!it.enabled.get() || it.model == null /*|| cull(camera, it.actor)*/) return@forEach
+            modelBatch.render(it, scene.environment)
         }
 
         modelBatch.end()
@@ -42,12 +41,17 @@ class Renderer {
             renderEngineGui(scene)
         }
 
+        Physics.step(delta)
+        Physics.debugDrawer.begin(camera)
+        Physics.physicsScene.debugDrawWorld()
+        Physics.debugDrawer.end()
+
         SceneManager.onEndOfFrame()
     }
 
-    private fun cull(camera: Camera, actor: Actor): Boolean {
+    private fun cull(camera: Camera, actor: BaseActor): Boolean {
         val aabb = BoundingBox()
-        actor.model!!.calculateBoundingBox(aabb)
+        actor.calculateBoundingBox(aabb)
         return !camera.frustum.boundsInFrustum(aabb)
     }
 

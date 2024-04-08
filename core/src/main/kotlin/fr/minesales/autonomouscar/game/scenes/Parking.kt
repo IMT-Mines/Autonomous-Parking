@@ -2,10 +2,18 @@ package fr.minesales.autonomouscar.game.scenes
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.PerspectiveCamera
-import com.badlogic.gdx.graphics.g3d.ModelInstance
+import com.badlogic.gdx.graphics.VertexAttributes.Usage
+import com.badlogic.gdx.graphics.g3d.Material
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight
-import fr.minesales.autonomouscar.engine.base.Scene
+import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder
+import com.badlogic.gdx.math.Vector3
+import com.badlogic.gdx.physics.bullet.collision.btBoxShape
+import com.badlogic.gdx.physics.bullet.collision.btCollisionObject
+import fr.minesales.autonomouscar.engine.RigidBodyInfo
+import fr.minesales.autonomouscar.engine.base.Actor
+import fr.minesales.autonomouscar.engine.Scene
+import fr.minesales.autonomouscar.engine.base.StaticMeshActor
 import fr.minesales.autonomouscar.engine.utils.ModelLoader
 import fr.minesales.autonomouscar.game.actors.CameraControllerActor
 import fr.minesales.autonomouscar.game.actors.VehicleActor
@@ -15,6 +23,14 @@ fun parking(scene: Scene){
     scene.environment.set(ColorAttribute(ColorAttribute.AmbientLight, 0.5f, 0.5f, 0.5f, 1f))
     scene.environment.add(DirectionalLight().set(1f, 1f, 1f, 0f, -1f, 0f))
 
-    CameraControllerActor("MainCamera", PerspectiveCamera(60f, Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat()))
-    VehicleActor("Vehicle", ModelLoader.loadFromFile("sedan/sedan.g3db".toInternalFile()))
+    val mb = ModelBuilder()
+
+    val ground = mb.createBox(100f, 0.1f, 100f, Material(ColorAttribute(ColorAttribute.Diffuse, 0.5f, 0.5f, 0.5f, 1f)), Usage.Position.toLong() or Usage.Normal.toLong())
+
+    CameraControllerActor(Actor("MainCamera"), PerspectiveCamera(60f, Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat()))
+
+    val g = StaticMeshActor(Actor("Ground", ground, RigidBodyInfo(0f, btBoxShape(Vector3(50f, 0.05f, 50f)))))
+    /*g.transform.setTranslation(Vector3(0f, -5f, 0f))
+    g.rigidbody?.proceedToTransform(g.transform)*/
+    VehicleActor(Actor("Vehicle", ModelLoader.loadFromFile("sedan/sedan.g3db".toInternalFile()), RigidBodyInfo(1000f, btBoxShape(Vector3(2f, 1f, 1f)))))
 }

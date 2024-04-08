@@ -1,28 +1,53 @@
 package fr.minesales.autonomouscar.engine.base
 
+import com.badlogic.gdx.graphics.g3d.Model
 import com.badlogic.gdx.graphics.g3d.ModelInstance
-import com.badlogic.gdx.math.Matrix4
-import fr.minesales.autonomouscar.Screen
+import com.badlogic.gdx.math.Vector3
+import com.badlogic.gdx.physics.bullet.collision.btCollisionObject
+import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody
+import com.badlogic.gdx.utils.Disposable
+import fr.minesales.autonomouscar.engine.Physics
+import fr.minesales.autonomouscar.engine.RigidBodyMotionState
 import fr.minesales.autonomouscar.engine.SceneManager
 import imgui.type.ImBoolean
 
-abstract class BaseActor(val actor: Actor) {
+abstract class BaseActor private constructor(val name: String, actor: Actor) : ModelInstance(actor.model ?: Model()), Disposable {
 
-    constructor(name: String, model: ModelInstance? = null) : this(Actor(name, model))
+    constructor(actor: Actor) : this(actor.name, actor)
+
+    var enabled: ImBoolean = ImBoolean(true)
+    var rigidbody: btRigidBody? = null
+
+    private lateinit var motionState: RigidBodyMotionState
 
     init {
         SceneManager.registerSceneActor(this)
-    }
 
-    var enabled: ImBoolean = ImBoolean(true)
+        if (model != null) {
+            val shape = actor.rigidbodyInfo?.collisionShape
+            val mass = actor.rigidbodyInfo?.mass ?: 0f
+            val localInertia = Vector3(0f, 0f, 0f)
 
-    var transform: Matrix4
-        get() = actor.model?.transform ?: Matrix4()
-        set(value) {
-            actor.model?.transform?.set(value)
+            if (mass > 0f){
+                shape?.calculateLocalInertia(mass, localInertia)
+            }
+
+            if (shape != null) {
+                motionState = RigidBodyMotionState(transform)
+                rigidbody = btRigidBody(btRigidBody.btRigidBodyConstructionInfo(mass, motionState, shape, localInertia))
+                rigidbody?.worldTransform = transform
+                rigidbody?.collisionFlags = rigidbody!!.collisionFlags and btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK
+                Physics.addRigidBody(rigidbody!!)
+            }
         }
+    }
 
     abstract fun start()
     abstract fun update()
     open fun gui() {}
+
+    override fun dispose() {
+        model?.dispose()
+        rigidbody?.dispose()
+    }
 }

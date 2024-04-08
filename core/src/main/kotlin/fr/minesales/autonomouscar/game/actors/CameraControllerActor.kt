@@ -9,11 +9,12 @@ import com.badlogic.gdx.math.Quaternion
 import com.badlogic.gdx.math.Vector3
 import fr.minesales.autonomouscar.engine.InputManager
 import fr.minesales.autonomouscar.engine.SceneManager
+import fr.minesales.autonomouscar.engine.base.Actor
 import fr.minesales.autonomouscar.engine.base.BaseActor
 import fr.minesales.autonomouscar.engine.utils.Time
 import imgui.ImGui
 
-class CameraControllerActor(name: String, val camera: Camera) : BaseActor(name, null) {
+class CameraControllerActor(actor: Actor, val camera: Camera) : BaseActor(actor) {
     private var sensitivity = 10f
     private var x = 0f
     private var y = 0f

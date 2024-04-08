@@ -1,16 +1,14 @@
 package fr.minesales.autonomouscar.engine
 
 import fr.minesales.autonomouscar.engine.base.BaseActor
-import fr.minesales.autonomouscar.engine.base.Scene
-import kotlin.reflect.KFunction1
 
 class SceneManager {
     companion object{
         var currentScene: Scene? = null
 
-        private var loadableScene: KFunction1<Scene, Unit>? = null
+        private var loadableScene: ((Scene) -> Unit)? = null
 
-        fun loadScene(sceneDescriptor: KFunction1<Scene, Unit>) {
+        fun loadScene(sceneDescriptor: (Scene) -> Unit) {
             if(currentScene == null)
                 load(sceneDescriptor)
             else
@@ -22,7 +20,7 @@ class SceneManager {
             loadableScene = null
         }
 
-        private fun load(sceneDescriptor: KFunction1<Scene, Unit>) {
+        private fun load(sceneDescriptor: (Scene) -> Unit) {
             disposeScene()
             currentScene = Scene()
             currentScene?.init(sceneDescriptor)
@@ -33,8 +31,11 @@ class SceneManager {
         }
 
         private fun disposeScene() {
+            Physics.dispose()
+            Physics.init()
+
             currentScene?.actors?.forEach{
-                it.actor.model?.model?.dispose()
+                it.dispose()
             }
         }
     }

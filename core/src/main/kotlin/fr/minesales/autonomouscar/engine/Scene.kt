@@ -1,8 +1,9 @@
-package fr.minesales.autonomouscar.engine.base
+package fr.minesales.autonomouscar.engine
 
 import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.g3d.Environment
 import fr.minesales.autonomouscar.Screen
+import fr.minesales.autonomouscar.engine.base.BaseActor
 
 class Scene {
     val actors: MutableList<BaseActor> = mutableListOf()

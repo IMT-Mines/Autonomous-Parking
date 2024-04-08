@@ -1,5 +1,6 @@
 package fr.minesales.autonomouscar.engine.base
 
-import com.badlogic.gdx.graphics.g3d.ModelInstance
+import com.badlogic.gdx.graphics.g3d.Model
+import fr.minesales.autonomouscar.engine.RigidBodyInfo
 
-data class Actor(var name: String, var model: ModelInstance? = null)
+data class Actor(val name: String, val model: Model? = null, val rigidbodyInfo: RigidBodyInfo? = null)

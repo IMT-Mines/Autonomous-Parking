@@ -1,8 +1,12 @@
 package fr.minesales.autonomouscar
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.g3d.ModelInstance
+import com.badlogic.gdx.physics.bullet.Bullet
+import com.badlogic.gdx.utils.GdxNativesLoader
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import fr.minesales.autonomouscar.engine.InputManager
+import fr.minesales.autonomouscar.engine.Physics
 import fr.minesales.autonomouscar.engine.Renderer
 import fr.minesales.autonomouscar.engine.SceneManager
 import fr.minesales.autonomouscar.engine.utils.ImGuiRenderer
@@ -26,6 +30,9 @@ class Screen : KtxScreen {
     }
 
     init {
+        Bullet.init(false, false)
+        Physics.init()
+
         SceneManager.loadScene(::parking)
 
         renderer = Renderer()
@@ -45,6 +52,7 @@ class Screen : KtxScreen {
     }
 
     override fun dispose() {
+        Physics.dispose()
         imGuiRenderer.dispose()
         renderer.dispose()
     }
