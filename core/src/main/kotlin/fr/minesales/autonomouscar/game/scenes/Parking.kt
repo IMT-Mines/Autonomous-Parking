@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape
-import com.badlogic.gdx.physics.bullet.collision.btCollisionObject
 import fr.minesales.autonomouscar.engine.RigidBodyInfo
 import fr.minesales.autonomouscar.engine.base.Actor
 import fr.minesales.autonomouscar.engine.Scene
@@ -32,5 +31,6 @@ fun parking(scene: Scene){
     val g = StaticMeshActor(Actor("Ground", ground, RigidBodyInfo(0f, btBoxShape(Vector3(50f, 0.05f, 50f)))))
     /*g.transform.setTranslation(Vector3(0f, -5f, 0f))
     g.rigidbody?.proceedToTransform(g.transform)*/
-    VehicleActor(Actor("Vehicle", ModelLoader.loadFromFile("sedan/sedan.g3db".toInternalFile()), RigidBodyInfo(1000f, btBoxShape(Vector3(2f, 1f, 1f)))))
+    val carModel = ModelLoader.loadGLTFfromFile("tesla/tesla.gltf".toInternalFile())
+    VehicleActor(Actor("Vehicle", carModel, RigidBodyInfo(1765f, btBoxShape(Vector3(1.1f, 0.5f, 2.7f)))))
 }
