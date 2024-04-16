@@ -29,8 +29,6 @@ fun parking(scene: Scene){
     CameraControllerActor(Actor("MainCamera"), PerspectiveCamera(60f, Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat()))
 
     val g = StaticMeshActor(Actor("Ground", ground, RigidBodyInfo(0f, btBoxShape(Vector3(50f, 0.05f, 50f)))))
-    /*g.transform.setTranslation(Vector3(0f, -5f, 0f))
-    g.rigidbody?.proceedToTransform(g.transform)*/
     val carModel = ModelLoader.loadGLTFfromFile("tesla/tesla.gltf".toInternalFile())
     VehicleActor(Actor("Vehicle", carModel, RigidBodyInfo(1765f, btBoxShape(Vector3(1.1f, 0.5f, 2.7f)))))
 }

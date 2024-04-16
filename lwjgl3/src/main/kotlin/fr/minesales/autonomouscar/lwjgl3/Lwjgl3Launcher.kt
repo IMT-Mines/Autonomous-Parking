@@ -16,6 +16,7 @@ fun main() {
     Lwjgl3Application(AutonomousParking(), Lwjgl3ApplicationConfiguration().apply {
         setTitle("Autonomous Parking")
         setWindowedMode(1280, 720)
+        //setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode())
         setWindowIcon(*(arrayOf(128, 64, 32, 16).map { "libgdx$it.png" }.toTypedArray()))
     })
 }
