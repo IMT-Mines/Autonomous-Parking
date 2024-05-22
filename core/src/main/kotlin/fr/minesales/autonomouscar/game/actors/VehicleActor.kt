@@ -40,25 +40,25 @@ class VehicleActor(actor: Actor, val wheelModels: MutableList<ModelInstance>) : 
         vehicleRaycaster = btDefaultVehicleRaycaster(Physics.physicsScene)
         tuning = btVehicleTuning()
         tuning.suspensionStiffness = 15f
-        tuning.maxSuspensionTravelCm = 30f
         vehicle = btRaycastVehicle(tuning, rigidbody, vehicleRaycaster)
 
         rigidbody?.activationState = Collision.DISABLE_DEACTIVATION
         vehicle.setCoordinateSystem(0, 1, 2)
 
-        val wheelConnectionPointHeight = 0.1f
-        val wheelRadius = 0.33f
+        val wheelConnectionPointHeight = 0f
+        val wheelRadius = 0.3915f
         val wheelDirection = Vector3(0f, -1f, 0f)
         val wheelAxle = Vector3(-1f, 0f, 0f)
-        vehicle.addWheel(Vector3(0.9f, wheelConnectionPointHeight, 1.75f), wheelDirection, wheelAxle, 0.6f, wheelRadius, tuning, true)
-        vehicle.addWheel(Vector3(-0.9f, wheelConnectionPointHeight, 1.75f), wheelDirection, wheelAxle, 0.6f, wheelRadius, tuning, true)
-        vehicle.addWheel(Vector3(0.95f, wheelConnectionPointHeight, -1.45f), wheelDirection, wheelAxle, 0.6f, wheelRadius, tuning, false)
-        vehicle.addWheel(Vector3(-0.95f, wheelConnectionPointHeight, -1.45f), wheelDirection, wheelAxle, 0.6f, wheelRadius, tuning, false)
+        val suspensionRestLength = 0.6f
+        vehicle.addWheel(Vector3(0.9f, wheelConnectionPointHeight, 1.75f), wheelDirection, wheelAxle, suspensionRestLength, wheelRadius, tuning, true)
+        vehicle.addWheel(Vector3(-0.9f, wheelConnectionPointHeight, 1.75f), wheelDirection, wheelAxle, suspensionRestLength, wheelRadius, tuning, true)
+        vehicle.addWheel(Vector3(0.95f, wheelConnectionPointHeight, -1.45f), wheelDirection, wheelAxle, suspensionRestLength, wheelRadius, tuning, false)
+        vehicle.addWheel(Vector3(-0.95f, wheelConnectionPointHeight, -1.45f), wheelDirection, wheelAxle, suspensionRestLength, wheelRadius, tuning, false)
         Physics.physicsScene.addVehicle(vehicle)
     }
 
     override fun update() {
-        vehicle.updateVehicle(Time.deltaTime)
+        vehicle.updateVehicle(Time.fixedDeltaTime)
 
         steer = if (Gdx.input.isKeyPressed(Keys.LEFT)){
             MathUtils.lerp(steer, 0.5f, Time.deltaTime * 2)
@@ -86,6 +86,12 @@ class VehicleActor(actor: Actor, val wheelModels: MutableList<ModelInstance>) : 
         vehicle.applyEngineForce(accelerate * 1000f, 2)
         vehicle.applyEngineForce(accelerate * 1000f, 3)
 
+        val rollingResistance = 2f * vehicle.currentSpeedKmHour / 3.6f
+        vehicle.setBrake(rollingResistance, 0)
+        vehicle.setBrake(rollingResistance, 1)
+        vehicle.setBrake(rollingResistance, 2)
+        vehicle.setBrake(rollingResistance, 3)
+
         if (Gdx.input.isKeyJustPressed(Keys.SPACE))
             SceneManager.loadScene(::parking)
 
@@ -95,7 +101,8 @@ class VehicleActor(actor: Actor, val wheelModels: MutableList<ModelInstance>) : 
         }
 
         for (i in wheelModels.indices) {
-            wheelModels[i].transform.set(vehicle.getWheelTransformWS(i).rotate(Quaternion().setEulerAngles(180f * (i % 2), 0f, 0f)))
+            val wheelMatrix = vehicle.getWheelTransformWS(i).rotate(Quaternion().setEulerAngles(180f * (i % 2), 0f, 0f))
+            wheelModels[i].transform.set(wheelMatrix)
         }
     }
 

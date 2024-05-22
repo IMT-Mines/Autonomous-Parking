@@ -32,7 +32,7 @@ fun parking(scene: Scene){
     CameraControllerActor(Actor("MainCamera"), PerspectiveCamera(60f, Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat()))
 
     //StaticMeshActor(Actor("Ground", ground, RigidBodyInfo(0f, btBoxShape(Vector3(50f, 0.05f, 50f)))))
-    StaticMeshActor(Actor("Parking", ModelLoader.loadG3DFromFile("parking.g3db".toInternalFile()), RigidBodyInfo(0f, btBoxShape(Vector3(50f, 0.05f, 50f)))))
+    StaticMeshActor(Actor("Parking", ModelLoader.loadG3DFromFile("parking.g3db".toInternalFile()), RigidBodyInfo(0f, btBoxShape(Vector3(50f, 0.01f, 50f)))))
 
     val test = StaticMeshActor(Actor("Test", mb.createBox(3f, 3f, 3f, Material(ColorAttribute(ColorAttribute.Diffuse, 1f, 0f, 0f, 1f)), Usage.Position.toLong() or Usage.Normal.toLong()), RigidBodyInfo(0f, btBoxShape(Vector3(1.5f, 1.5f, 1.5f)))))
     test.rigidbody?.translate(Vector3(0f, 1.5f, 10f))
