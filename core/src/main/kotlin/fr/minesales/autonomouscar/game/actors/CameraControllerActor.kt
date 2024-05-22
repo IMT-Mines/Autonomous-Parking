@@ -27,7 +27,8 @@ class CameraControllerActor(actor: Actor, val camera: Camera) : BaseActor(actor)
 
     override fun start() {
         camera.near = 0.03f
-        camera.position.set(0f, 0f, 5f)
+        camera.position.set(-7f, 2f, 5.5f)
+        camera.rotate(Quaternion().setEulerAngles(-90f, 0f, 0f))
         camera.update()
     }
 
@@ -65,13 +66,13 @@ class CameraControllerActor(actor: Actor, val camera: Camera) : BaseActor(actor)
     }
 
     override fun gui() {
-        /*val q = camera.view.getRotation(Quaternion())
-        ImGui.begin("Camera Controller")
-        ImGui.text("Camera position ${camera.position.x}, ${camera.position.y}, ${camera.position.z}")
-        ImGui.text("Camera rotation ${q.pitch}, ${q.yaw}, ${q.roll}")
-        ImGui.text("Axis x $x y $y")
-        ImGui.text("Forward ${camera.direction.cpy()}")
-        ImGui.text("Right ${camera.direction.cpy().crs(Vector3(0f, 1f, 0f))}")
-        ImGui.end()*/
+//        val q = camera.view.getRotation(Quaternion())
+//        ImGui.begin("Camera Controller")
+//        ImGui.text("Camera position ${camera.position.x}, ${camera.position.y}, ${camera.position.z}")
+//        ImGui.text("Camera rotation ${q.pitch}, ${q.yaw}, ${q.roll}")
+//        ImGui.text("Axis x $x y $y")
+//        ImGui.text("Forward ${camera.direction.cpy()}")
+//        ImGui.text("Right ${camera.direction.cpy().crs(Vector3(0f, 1f, 0f))}")
+//        ImGui.end()
     }
 }
