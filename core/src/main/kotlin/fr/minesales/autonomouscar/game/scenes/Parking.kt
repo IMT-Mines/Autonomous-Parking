@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder
 import com.badlogic.gdx.math.Quaternion
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape
+import com.badlogic.gdx.physics.bullet.collision.btTriangleMeshShape
 import fr.minesales.autonomouscar.engine.Physics
 import fr.minesales.autonomouscar.engine.RigidBodyInfo
 import fr.minesales.autonomouscar.engine.base.Actor
@@ -29,10 +30,13 @@ fun parking(scene: Scene){
 
     val ground = mb.createBox(100f, 0.1f, 100f, Material(ColorAttribute(ColorAttribute.Diffuse, 0.5f, 0.5f, 0.5f, 1f)), Usage.Position.toLong() or Usage.Normal.toLong())
 
-    CameraControllerActor(Actor("MainCamera"), PerspectiveCamera(60f, Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat()))
+    CameraControllerActor(Actor("MainCamera"), PerspectiveCamera(70f, Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat()))
 
     //StaticMeshActor(Actor("Ground", ground, RigidBodyInfo(0f, btBoxShape(Vector3(50f, 0.05f, 50f)))))
     StaticMeshActor(Actor("Parking", ModelLoader.loadG3DFromFile("parking.g3db".toInternalFile()), RigidBodyInfo(0f, btBoxShape(Vector3(50f, 0.01f, 50f)))))
+    StaticMeshActor(Actor("Wall", ModelLoader.loadG3DFromFile("wall.g3db".toInternalFile()), null))
+    val e = StaticMeshActor(Actor("Sky", ModelLoader.loadG3DFromFile("sky.g3db".toInternalFile()), null))
+    e.materials[0].set(ColorAttribute(ColorAttribute.Emissive, 0.4f, 0.4f, 0.4f, 1f))
 
     val test = StaticMeshActor(Actor("Test", mb.createBox(3f, 3f, 3f, Material(ColorAttribute(ColorAttribute.Diffuse, 1f, 0f, 0f, 1f)), Usage.Position.toLong() or Usage.Normal.toLong()), RigidBodyInfo(0f, btBoxShape(Vector3(1.5f, 1.5f, 1.5f)))))
     test.rigidbody?.translate(Vector3(0f, 1.5f, 10f))

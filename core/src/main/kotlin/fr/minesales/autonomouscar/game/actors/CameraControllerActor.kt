@@ -27,6 +27,7 @@ class CameraControllerActor(actor: Actor, val camera: Camera) : BaseActor(actor)
 
     override fun start() {
         camera.near = 0.03f
+        camera.far = 2000f
         camera.position.set(-7f, 2f, 5.5f)
         camera.rotate(Quaternion().setEulerAngles(-90f, 0f, 0f))
         camera.update()
